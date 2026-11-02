@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useDropzone } from "react-dropzone";
 import { motion } from "framer-motion";
 import {
@@ -14,6 +15,7 @@ import { uploadFile } from "../api";
 
 export default function UploadPage() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
@@ -26,7 +28,7 @@ export default function UploadPage() {
       setFile(f);
       setError("");
     } else {
-      setError("Please upload a valid PDF file.");
+      setError(t("upload.invalidFile"));
     }
   }, []);
 
@@ -51,7 +53,7 @@ export default function UploadPage() {
     } catch (err) {
       setError(
         err.response?.data?.error ||
-        "Upload failed. Please try again."
+        t("upload.failed")
       );
     } finally {
       setUploading(false);
@@ -69,12 +71,11 @@ export default function UploadPage() {
         >
 
           <h1 className="title">
-            AI Document Translator
+            {t("upload.title")}
           </h1>
 
           <p className="subtitle">
-            Translate scanned PDF documents into multiple languages
-            using OCR + AI Translation.
+            {t("upload.subtitle")}
           </p>
 
         </motion.div>
@@ -101,8 +102,8 @@ export default function UploadPage() {
             }}
           >
             {isDragActive
-              ? "Drop PDF Here"
-              : "Drag & Drop PDF"}
+              ? t("upload.dropActive")
+              : t("upload.dropInactive")}
           </h3>
 
           <p
@@ -110,7 +111,7 @@ export default function UploadPage() {
               color: "rgba(255,255,255,.65)",
             }}
           >
-            or click to browse
+            {t("upload.browse")}
           </p>
 
           <small
@@ -120,7 +121,7 @@ export default function UploadPage() {
               color: "rgba(255,255,255,.45)",
             }}
           >
-            Supports PDF • Maximum 50 MB
+            {t("upload.supports")}
           </small>
 
         </motion.div>
@@ -197,8 +198,8 @@ export default function UploadPage() {
           }}
         >
           {uploading
-            ? "Uploading..."
-            : "Upload & Continue"}
+                          ? t("upload.uploading")
+            : t("upload.continue")}
         </button>
 
         <div
@@ -218,7 +219,7 @@ export default function UploadPage() {
               color="#A78BFA"
             />
 
-            <p>OCR</p>
+            <p>{t("upload.ocr")}</p>
 
           </div>
 
@@ -229,7 +230,7 @@ export default function UploadPage() {
               color="#60A5FA"
             />
 
-            <p>200+ Languages</p>
+            <p>{t("upload.languages")}</p>
 
           </div>
 
@@ -240,7 +241,7 @@ export default function UploadPage() {
               color="#4ADE80"
             />
 
-            <p>AI Translation</p>
+            <p>{t("upload.aiTranslation")}</p>
 
           </div>
 

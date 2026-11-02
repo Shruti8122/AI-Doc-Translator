@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import {
   FiUploadCloud,
@@ -17,11 +18,12 @@ import { getProgress } from "../api";
 export default function ProgressPage() {
   const { taskId } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const intervalRef = useRef(null);
 
   const [progress, setProgress] = useState(0);
-  const [message, setMessage] = useState("Starting...");
+  const [message, setMessage] = useState(t("progress.starting"));
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -36,7 +38,7 @@ export default function ProgressPage() {
         }
 
         setProgress(data.progress || 0);
-        setMessage(data.message || "Processing...");
+        setMessage(data.message || t("progress.processing"));
 
         if (data.progress >= 100) {
           clearInterval(intervalRef.current);
@@ -46,9 +48,7 @@ export default function ProgressPage() {
           }, 1200);
         }
       } catch {
-        setError(
-          "Connection lost. Please make sure the backend server is running."
-        );
+        setError(t("progress.connectionLost"));
         clearInterval(intervalRef.current);
       }
     };
@@ -63,27 +63,27 @@ export default function ProgressPage() {
   const steps = [
     {
       icon: <FiUploadCloud />,
-      title: "Uploading",
+      title: t("progress.step.uploading"),
       done: progress >= 10,
     },
     {
       icon: <FiFileText />,
-      title: "Reading PDF",
+      title: t("progress.step.reading"),
       done: progress >= 25,
     },
     {
       icon: <FiCpu />,
-      title: "OCR",
+      title: t("progress.step.ocr"),
       done: progress >= 50,
     },
     {
       icon: <FiGlobe />,
-      title: "Translation",
+      title: t("progress.step.translation"),
       done: progress >= 80,
     },
     {
       icon: <FiCheckCircle />,
-      title: "Generating PDF",
+      title: t("progress.step.generating"),
       done: progress >= 100,
     },
   ];
@@ -103,7 +103,7 @@ export default function ProgressPage() {
               className="title"
               style={{ marginTop: 20 }}
             >
-              Something Went Wrong
+              {t("progress.error")}
             </h1>
 
             <p className="subtitle">
@@ -112,9 +112,9 @@ export default function ProgressPage() {
 
             <button
               className="glass-button"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/dashboard/translate")}
             >
-              Try Again
+              {t("progress.tryAgain")}
             </button>
           </div>
 
@@ -140,11 +140,11 @@ export default function ProgressPage() {
         >
 
           <h1 className="title">
-            AI Translation In Progress
+            {t("progress.title")}
           </h1>
 
           <p className="subtitle">
-            Please wait while your document is processed.
+            {t("progress.subtitle")}
           </p>
 
         </motion.div>
@@ -264,7 +264,7 @@ export default function ProgressPage() {
                     fontWeight: 700,
                   }}
                 >
-                  Done
+                  {t("progress.done")}
                 </span>
               ) : (
                 <FiLoader
@@ -284,8 +284,7 @@ export default function ProgressPage() {
               fontSize: ".9rem",
             }}
           >
-            First launch may take a few minutes while AI
-            models load into memory.
+            {t("progress.firstLaunch")}
           </p>
         )}
 

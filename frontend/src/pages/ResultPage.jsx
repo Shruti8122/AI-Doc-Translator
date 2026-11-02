@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import {
   FiCheckCircle,
@@ -17,6 +18,7 @@ export default function ResultPage() {
   const { taskId } = useParams();
 
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [ready, setReady] = useState(false);
 
@@ -68,13 +70,13 @@ export default function ResultPage() {
 
           <h1 className="title">
 
-            Translation Complete
+            {t("result.title")}
 
           </h1>
 
           <p className="subtitle">
 
-            Your translated PDF has been generated successfully.
+            {t("result.subtitle")}
 
           </p>
 
@@ -104,9 +106,9 @@ export default function ResultPage() {
               size={30}
             />
 
-            <h3>PDF Ready</h3>
+            <h3>{t("result.pdfReady")}</h3>
 
-            <p>Generated Successfully</p>
+            <p>{t("result.generated")}</p>
 
           </div>
 
@@ -116,9 +118,9 @@ export default function ResultPage() {
               size={30}
             />
 
-            <h3>Preview</h3>
+            <h3>{t("result.preview")}</h3>
 
-            <p>View Before Download</p>
+            <p>{t("result.viewBefore")}</p>
 
           </div>
 
@@ -177,7 +179,7 @@ export default function ResultPage() {
 
             <FiDownload />
 
-            Download PDF
+            {t("result.download")}
 
           </a>
 
@@ -185,7 +187,7 @@ export default function ResultPage() {
 
             className="glass-button secondary-button"
 
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/dashboard/translate")}
 
           >
 
@@ -195,7 +197,7 @@ export default function ResultPage() {
               }}
             />
 
-            Translate Another
+            {t("result.translateAnother")}
 
           </button>
 

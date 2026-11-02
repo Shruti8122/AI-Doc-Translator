@@ -1,0 +1,43 @@
+const path = require('path')
+
+module.exports = {
+  PORT: process.env.PORT || 5000,
+  MONGO_URI: process.env.MONGO_URI || 'mongodb://localhost:27017/doc_translator',
+  FASTAPI_URL: process.env.FASTAPI_URL || 'http://localhost:8000',
+  UPLOAD_FOLDER: path.resolve(__dirname, '..', 'uploads'),
+  MAX_FILE_SIZE: 50 * 1024 * 1024,
+  FRONTEND_FOLDER: path.resolve(__dirname, '..', '..', 'frontend', 'dist'),
+  LANGUAGES: {
+    "English": { "easyocr": "en", "nllb": "eng_Latn" },
+    "Hindi": { "easyocr": "hi", "nllb": "hin_Deva" },
+    "French": { "easyocr": "fr", "nllb": "fra_Latn" },
+    "Spanish": { "easyocr": "es", "nllb": "spa_Latn" },
+    "German": { "easyocr": "de", "nllb": "deu_Latn" },
+    "Italian": { "easyocr": "it", "nllb": "ita_Latn" },
+    "Portuguese": { "easyocr": "pt", "nllb": "por_Latn" },
+    "Russian": { "easyocr": "ru", "nllb": "rus_Cyrl" },
+    "Chinese (Simplified)": { "easyocr": "ch_sim", "nllb": "zho_Hans" },
+    "Chinese (Traditional)": { "easyocr": "ch_tra", "nllb": "zho_Hant" },
+    "Japanese": { "easyocr": "ja", "nllb": "jpn_Jpan" },
+    "Korean": { "easyocr": "ko", "nllb": "kor_Hang" },
+    "Arabic": { "easyocr": "ar", "nllb": "arb_Arab" },
+    "Bengali": { "easyocr": "bn", "nllb": "ben_Beng" },
+    "Turkish": { "easyocr": "tr", "nllb": "tur_Latn" },
+    "Vietnamese": { "easyocr": "vi", "nllb": "vie_Latn" },
+    "Thai": { "easyocr": "th", "nllb": "tha_Thai" },
+    "Dutch": { "easyocr": "nl", "nllb": "nld_Latn" },
+    "Polish": { "easyocr": "pl", "nllb": "pol_Latn" },
+    "Romanian": { "easyocr": "ro", "nllb": "ron_Latn" },
+    "Swedish": { "easyocr": "sv", "nllb": "swe_Latn" },
+    "Czech": { "easyocr": "cs", "nllb": "ces_Latn" },
+    "Greek": { "easyocr": "el", "nllb": "ell_Grek" },
+    "Hungarian": { "easyocr": "hu", "nllb": "hun_Latn" },
+    "Indonesian": { "easyocr": "id", "nllb": "ind_Latn" },
+    "Malay": { "easyocr": "ms", "nllb": "zsm_Latn" },
+    "Ukrainian": { "easyocr": "uk", "nllb": "ukr_Cyrl" },
+    "Hebrew": { "easyocr": "he", "nllb": "heb_Hebr" },
+    "Urdu": { "easyocr": "ur", "nllb": "urd_Arab" },
+    "Tamil": { "easyocr": "ta", "nllb": "tam_Taml" },
+    "Telugu": { "easyocr": "te", "nllb": "tel_Telu" }
+  }
+}

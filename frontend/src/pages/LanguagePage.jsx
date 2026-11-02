@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import {
   FiGlobe,
@@ -15,6 +16,7 @@ export default function LanguagePage() {
 
   const { taskId } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [languages, setLanguages] = useState({});
   const [sourceLang, setSourceLang] = useState("en");
@@ -27,7 +29,7 @@ export default function LanguagePage() {
     fetchLanguages()
       .then((data) => setLanguages(data))
       .catch(() =>
-        setError("Unable to load languages.")
+        setError(t("languages.failedToLoad"))
       );
 
   }, []);
@@ -36,7 +38,7 @@ export default function LanguagePage() {
 
     if (!targetLang) {
 
-      setError("Please select a target language.");
+      setError(t("languages.selectTarget"));
       return;
 
     }
@@ -49,13 +51,16 @@ export default function LanguagePage() {
       const sourceEntry = Object.entries(languages).find(
         ([, value]) => value.easyocr === sourceLang
       );
+      const targetEntry = Object.entries(languages).find(
+        ([, value]) => value.nllb === targetLang
+      );
 
       await startTranslation(
         taskId,
-        sourceEntry
-          ? sourceEntry[1].easyocr
-          : "en",
-        targetLang
+        sourceEntry ? sourceEntry[1].easyocr : "en",
+        targetLang,
+        sourceEntry ? sourceEntry[0] : "English",
+        targetEntry ? targetEntry[0] : ""
       );
 
       navigate(`/progress/${taskId}`);
@@ -64,7 +69,7 @@ export default function LanguagePage() {
 
       setError(
         err.response?.data?.error ||
-        "Unable to start translation."
+        t("languages.failedToStart")
       );
 
     } finally {
@@ -99,14 +104,13 @@ export default function LanguagePage() {
 
           <h1 className="title">
 
-            Choose Languages
+            {t("languages.title")}
 
           </h1>
 
           <p className="subtitle">
 
-            Select the document language and
-            choose the translation language.
+            {t("languages.subtitle")}
 
           </p>
 
@@ -130,7 +134,7 @@ export default function LanguagePage() {
 
             <FiBook />
 
-            Document Language
+            {t("languages.source")}
 
           </label>
 
@@ -206,7 +210,7 @@ export default function LanguagePage() {
 
             <FiGlobe />
 
-            Translate To
+            {t("languages.target")}
 
           </label>
 
@@ -224,7 +228,7 @@ export default function LanguagePage() {
 
             <option value="">
 
-              Select Language
+              {t("languages.select")}
 
             </option>
 
@@ -316,13 +320,13 @@ export default function LanguagePage() {
                   }}
                 />
 
-                Starting...
+                {t("languages.starting")}
 
               </>
 
             ) : (
 
-              "Start Translation"
+              t("languages.start")
 
             )
 

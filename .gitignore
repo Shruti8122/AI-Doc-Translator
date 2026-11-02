@@ -1,0 +1,12 @@
+node_modules/
+backend/express/node_modules/
+backend/express/.env
+.env
+backend/uploads/
+__pycache__/
+*.pyc
+.DS_Store
+start_express.ps1
+start_fastapi.ps1
+start_flask.ps1
+start_frontend.ps1
